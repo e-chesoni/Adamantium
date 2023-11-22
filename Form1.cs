@@ -7,6 +7,7 @@ using System.Threading;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Timers;
 
 namespace Adamantium;
 
@@ -102,53 +103,53 @@ delegate void updateTextBoxDelegate(string newText);
 
     private void serialWrite(string msg)
     {
-        /*
-        if (serialPort1.IsOpen)
+        if (adamSerialPort.IsOpen)
         {
-            if (serialPort1.BytesToRead <= 0)
+            if (adamSerialPort.BytesToRead <= 0)
             {
                 System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
                 byte[] data = encoding.GetBytes(msg);
                 try
                 {
-                    serialPort1.Write(data, 0, data.Length);
-                    serialPort1.Write("\n\r");
+                    adamSerialPort.Write(data, 0, data.Length);
+                    adamSerialPort.Write("\n\r");
                 }
                 catch
                 {
                     if (eOn)
                     {
-                        sendMail("Serial Write");
-                        END();
+                        Console.WriteLine("eOn--this does nothing right now, but could be used to send mail.");
+                        //sendMail("Serial Write");
+                        //END();
                     }
                 }
             }
             else
             {
-                serialPort1.DiscardInBuffer();
+                adamSerialPort.DiscardInBuffer();
             }
         }
         else
         {
-            serialPort1.PortName = ComPort;
-            serialPort1.BaudRate = 38400;
-            serialPort1.DataBits = 8;
-            serialPort1.Parity = Parity.None;
-            serialPort1.StopBits = StopBits.One;
+            adamSerialPort.PortName = ComPort;
+            adamSerialPort.BaudRate = 38400;
+            adamSerialPort.DataBits = 8;
+            adamSerialPort.Parity = Parity.None;
+            adamSerialPort.StopBits = StopBits.One;
             try
             {
-                serialPort1.Open();
+                adamSerialPort.Open();
                 updateTextBox("\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r");
                 updateTextBox(ComPort + " Open. Begin Testing");
-                comboBox1.Enabled = false;
-                OpenPort.Enabled = false;
+                portComboBox.Enabled = false;
+                openPortBtn.Enabled = false;
             }
             catch
             {
-                END();
+                Console.WriteLine("Error caught on write.");
+                //END();
             }
         }
-        */
     }
 
     private void adamSerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -222,6 +223,76 @@ delegate void updateTextBoxDelegate(string newText);
 
     private void timer1_Tick(object sender, EventArgs e)
     {
+
+    }
+
+    private void portComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private void openPortBtn_Click(object sender, EventArgs e)
+    {
+        OpenSerialPort();
+    }
+
+    private void SetupSerialPort()
+    {
+        Console.WriteLine("Initializing serial port...");
+
+        // Allow the user to set the appropriate properties.
+        adamSerialPort.PortName = "COM4";
+        adamSerialPort.BaudRate = 38400;
+        adamSerialPort.Parity = Parity.None;
+        adamSerialPort.DataBits = 8;
+        adamSerialPort.StopBits = StopBits.One;
+        adamSerialPort.Handshake = Handshake.None;
+    }
+
+    private bool OpenSerialPort()
+    {
+        Console.WriteLine("Setting up serial port...");
+        SetupSerialPort();
+        Console.WriteLine("Opening serial port...");
+
+        // Try opening the serial port
+        try { adamSerialPort.Open(); }
+        catch
+        {
+            Console.WriteLine("Cannot open serial port; COM4 is not valid.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void openPort()
+    {
+        adamSerialPort.PortName = portComboBox.SelectedItem.ToString();
+        adamSerialPort.BaudRate = BaudRate;
+        adamSerialPort.DataBits = 8;
+        adamSerialPort.Parity = Parity.None;
+        adamSerialPort.StopBits = StopBits.One;
+        try
+        {
+            adamSerialPort.Open();
+            if (adamSerialPort.IsOpen)
+            {
+                updateTextBox("\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r");
+                updateTextBox("Adamantium: " + ComPort + " Open. Begin Testing");
+                portComboBox.Enabled = false;
+                openPortBtn.Enabled = false;
+                //Send.Enabled = true;
+                //TimerOn.Enabled = true;
+                //comCheck.Stop();
+            }
+
+
+        }
+        catch
+        {
+            updateTextBox("Adamantium: Try again " + ComPort + " Is Not Valid");
+        }
 
     }
 }

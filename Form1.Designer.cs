@@ -29,9 +29,9 @@ partial class Form1
     private void InitializeComponent()
     {
             this.components = new System.ComponentModel.Container();
-            //System.Text.ASCIIEncoding.ASCIIEncodingSealed asciiEncodingSealed2 = new System.Text.ASCIIEncoding.ASCIIEncodingSealed();
-            System.Text.DecoderReplacementFallback decoderReplacementFallback2 = new System.Text.DecoderReplacementFallback();
-            System.Text.EncoderReplacementFallback encoderReplacementFallback2 = new System.Text.EncoderReplacementFallback();
+            System.Text.ASCIIEncoding asciiEncoding1 = new System.Text.ASCIIEncoding();
+            System.Text.DecoderReplacementFallback decoderReplacementFallback1 = new System.Text.DecoderReplacementFallback();
+            System.Text.EncoderReplacementFallback encoderReplacementFallback1 = new System.Text.EncoderReplacementFallback();
             this.adamSerialPort = new System.IO.Ports.SerialPort(this.components);
             this.refreshBtn = new System.Windows.Forms.Button();
             this.selectBtn = new System.Windows.Forms.Button();
@@ -60,7 +60,7 @@ partial class Form1
             this.label7 = new System.Windows.Forms.Label();
             this.baudTextBox = new System.Windows.Forms.TextBox();
             this.portComboBox = new System.Windows.Forms.ComboBox();
-            this.openBtn = new System.Windows.Forms.Button();
+            this.openPortBtn = new System.Windows.Forms.Button();
             this.emailCheckBox = new System.Windows.Forms.CheckBox();
             this.emailOnLabel = new System.Windows.Forms.Label();
             this.logTextBox = new System.Windows.Forms.TextBox();
@@ -89,9 +89,9 @@ partial class Form1
             this.adamSerialPort.DataBits = 8;
             this.adamSerialPort.DiscardNull = false;
             this.adamSerialPort.DtrEnable = false;
-            //asciiEncodingSealed2.DecoderFallback = decoderReplacementFallback2;
-            //asciiEncodingSealed2.EncoderFallback = encoderReplacementFallback2;
-            //this.adamSerialPort.Encoding = asciiEncodingSealed2;
+            //asciiEncoding1.DecoderFallback = decoderReplacementFallback1;
+            //asciiEncoding1.EncoderFallback = encoderReplacementFallback1;
+            this.adamSerialPort.Encoding = asciiEncoding1;
             this.adamSerialPort.Handshake = System.IO.Ports.Handshake.None;
             this.adamSerialPort.NewLine = "\n";
             this.adamSerialPort.Parity = System.IO.Ports.Parity.None;
@@ -348,15 +348,17 @@ partial class Form1
             this.portComboBox.Name = "portComboBox";
             this.portComboBox.Size = new System.Drawing.Size(75, 23);
             this.portComboBox.TabIndex = 26;
+            this.portComboBox.SelectedIndexChanged += new System.EventHandler(this.portComboBox_SelectedIndexChanged);
             // 
-            // openBtn
+            // openPortBtn
             // 
-            this.openBtn.Location = new System.Drawing.Point(93, 82);
-            this.openBtn.Name = "openBtn";
-            this.openBtn.Size = new System.Drawing.Size(75, 23);
-            this.openBtn.TabIndex = 27;
-            this.openBtn.Text = "Open";
-            this.openBtn.UseVisualStyleBackColor = true;
+            this.openPortBtn.Location = new System.Drawing.Point(93, 82);
+            this.openPortBtn.Name = "openPortBtn";
+            this.openPortBtn.Size = new System.Drawing.Size(75, 23);
+            this.openPortBtn.TabIndex = 27;
+            this.openPortBtn.Text = "Open";
+            this.openPortBtn.UseVisualStyleBackColor = true;
+            this.openPortBtn.Click += new System.EventHandler(this.openPortBtn_Click);
             // 
             // emailCheckBox
             // 
@@ -543,7 +545,7 @@ partial class Form1
             this.Controls.Add(this.logTextBox);
             this.Controls.Add(this.emailOnLabel);
             this.Controls.Add(this.emailCheckBox);
-            this.Controls.Add(this.openBtn);
+            this.Controls.Add(this.openPortBtn);
             this.Controls.Add(this.portComboBox);
             this.Controls.Add(this.baudTextBox);
             this.Controls.Add(this.label7);
@@ -605,7 +607,7 @@ partial class Form1
     private TextBox cmd5TextBox;
     private TextBox baudTextBox;
     private ComboBox portComboBox;
-    private Button openBtn;
+    private Button openPortBtn;
     private CheckBox emailCheckBox;
     private Label emailOnLabel;
     private TextBox cyclesTextBox;
