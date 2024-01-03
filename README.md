@@ -21,7 +21,7 @@ These instructions will get you a copy of the project up and running on your loc
 2. Navigate to the directory where you want to clone the project.
 3. Run the following command:
    ```
-   git clone [URL of your forked repository]
+   git clone https://github.com/e-chesoni/Adamantium
    ```
 4. Navigate into the cloned directory.
 
