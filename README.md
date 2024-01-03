@@ -1,5 +1,5 @@
 # Adamantium
-Micronix Stepper Motor Integration for Magneto
+Micronix Stepper Motor Integration for [Magneto](https://github.com/e-chesoni/Magneto).
 
 ## Project Overview
 This project is a proof of concept for testing Micronix stepper motors, intended to be integrated with the larger project, Magneto. Developed in Visual Studio Code, this C# project utilizes code provided by Micronix as a base for further development and integration.
