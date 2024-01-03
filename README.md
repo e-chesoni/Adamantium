@@ -54,4 +54,4 @@ Feel free to fork the project and submit pull requests. I appreciate any contrib
 5. Open a pull request.
 
 ## License
-This project is licensed under the [LICENSE NAME] - see the LICENSE file for details.
+This project is licensed under the MIT License
